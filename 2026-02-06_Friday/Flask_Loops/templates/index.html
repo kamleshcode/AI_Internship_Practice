@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Interns</h2>
+
+<form action="/add_interns" method="POST">
+    Name:
+    <input name="name" required><br>
+    Age:
+    <input name="age"><br>
+    Degree:
+    <select name="degree" required>
+        <option value="BTech">BTech</option>
+        <option value="Bsc">Bsc</option>
+    </select><br>
+    <button type ="submit">Add interns</button>
+</form>
+<br>
+<a href="/interns">View Interns</a>
+{% endblock %}

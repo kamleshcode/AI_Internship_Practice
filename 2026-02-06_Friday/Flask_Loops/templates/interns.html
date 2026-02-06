@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<h2>View Interns</h2>
+<table border="1" cellpadding="5">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Degree</th>
+    <th>Action</th>
+  </tr>
+  {% for ai_intern in ai_interns %}
+  <tr>
+    <td>{{ ai_intern.id }}</td>
+    <td>{{ ai_intern.name }}</td>
+    <td>{{ ai_intern.age }}</td>
+    <td>{{ ai_intern.degree }}</td>
+    <td>
+      <a href="/delete/{{ ai_intern.id }}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br>
+<a href="/">Add More Interns</a>
+{% endblock %}
+
