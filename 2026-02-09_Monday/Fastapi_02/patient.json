@@ -1,0 +1,210 @@
+{
+  "patients": [
+    {
+      "patient_id": "P001",
+      "name": "Amit Sharma",
+      "age": 45,
+      "gender": "Male",
+      "contact": {
+        "phone": "+91-9876543210",
+        "email": "amit.sharma@example.com"
+      },
+      "address": "12 MG Road, Mumbai, India",
+      "weight_kg": 82,
+      "height_cm": 175,
+      "bmi": 26.8,
+      "medical_history": [
+        {
+          "condition": "Hypertension",
+          "diagnosed_date": "2018-05-12",
+          "status": "Ongoing"
+        },
+        {
+          "condition": "Diabetes Type 2",
+          "diagnosed_date": "2020-09-20",
+          "status": "Ongoing"
+        }
+      ],
+      "prescriptions": [
+        {
+          "drug": "Metformin",
+          "dosage": "500mg",
+          "frequency": "Twice daily"
+        },
+        {
+          "drug": "Amlodipine",
+          "dosage": "10mg",
+          "frequency": "Once daily"
+        }
+      ]
+    },
+    {
+      "patient_id": "P002",
+      "name": "Priya Patel",
+      "age": 32,
+      "gender": "Female",
+      "contact": {
+        "phone": "+91-9123456789",
+        "email": "priya.patel@example.com"
+      },
+      "address": "45 Nehru Street, Ahmedabad, India",
+      "weight_kg": 60,
+      "height_cm": 162,
+      "bmi": 22.9,
+      "medical_history": [
+        {
+          "condition": "Asthma",
+          "diagnosed_date": "2015-03-10",
+          "status": "Managed"
+        }
+      ],
+      "prescriptions": [
+        {
+          "drug": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "As needed"
+        }
+      ]
+    },
+    {
+      "patient_id": "P003",
+      "name": "Ravi Kumar",
+      "age": 50,
+      "gender": "Male",
+      "contact": {
+        "phone": "+91-9988776655",
+        "email": "ravi.kumar@example.com"
+      },
+      "address": "78 Park Street, Kolkata, India",
+      "weight_kg": 90,
+      "height_cm": 180,
+      "bmi": 27.8,
+      "medical_history": [
+        {
+          "condition": "Coronary Artery Disease",
+          "diagnosed_date": "2019-11-02",
+          "status": "Ongoing"
+        }
+      ],
+      "prescriptions": [
+        {
+          "drug": "Atorvastatin",
+          "dosage": "20mg",
+          "frequency": "Once daily"
+        }
+      ]
+    },
+    {
+      "patient_id": "P004",
+      "name": "Sneha Reddy",
+      "age": 28,
+      "gender": "Female",
+      "contact": {
+        "phone": "+91-9876501234",
+        "email": "sneha.reddy@example.com"
+      },
+      "address": "22 Jubilee Hills, Hyderabad, India",
+      "weight_kg": 55,
+      "height_cm": 160,
+      "bmi": 21.5,
+      "medical_history": [
+        {
+          "condition": "Migraine",
+          "diagnosed_date": "2021-07-15",
+          "status": "Managed"
+        }
+      ],
+      "prescriptions": [
+        {
+          "drug": "Sumatriptan",
+          "dosage": "50mg",
+          "frequency": "As needed"
+        }
+      ]
+    },
+    {
+      "patient_id": "P005",
+      "name": "Arjun Mehta",
+      "age": 36,
+      "gender": "Male",
+      "contact": {
+        "phone": "+91-9012345678",
+        "email": "arjun.mehta@example.com"
+      },
+      "address": "14 Connaught Place, New Delhi, India",
+      "weight_kg": 70,
+      "height_cm": 172,
+      "bmi": 23.7,
+      "medical_history": [
+        {
+          "condition": "Gastritis",
+          "diagnosed_date": "2022-01-10",
+          "status": "Ongoing"
+        }
+      ],
+      "prescriptions": [
+        {
+          "drug": "Omeprazole",
+          "dosage": "20mg",
+          "frequency": "Once daily"
+        }
+      ]
+    },
+    {
+      "patient_id": "P006",
+      "name": "Meera Joshi",
+      "age": 40,
+      "gender": "Female",
+      "contact": {
+        "phone": "+91-9098765432",
+        "email": "meera.joshi@example.com"
+      },
+      "address": "9 FC Road, Pune, India",
+      "weight_kg": 65,
+      "height_cm": 165,
+      "bmi": 23.9,
+      "medical_history": [
+        {
+          "condition": "Hypothyroidism",
+          "diagnosed_date": "2017-04-18",
+          "status": "Ongoing"
+        }
+      ],
+      "prescriptions": [
+        {
+          "drug": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "Once daily"
+        }
+      ]
+    },
+    {
+      "patient_id": "P007",
+      "name": "Karan Singh",
+      "age": 60,
+      "gender": "Male",
+      "contact": {
+        "phone": "+91-9123004567",
+        "email": "karan.singh@example.com"
+      },
+      "address": "33 Civil Lines, Jaipur, India",
+      "weight_kg": 85,
+      "height_cm": 170,
+      "bmi": 29.4,
+      "medical_history": [
+        {
+          "condition": "Chronic Kidney Disease",
+          "diagnosed_date": "2020-06-25",
+          "status": "Ongoing"
+        }
+      ],
+      "prescriptions": [
+        {
+          "drug": "Losartan",
+          "dosage": "50mg",
+          "frequency": "Once daily"
+        }
+      ]
+    }
+  ]
+}
