@@ -3,19 +3,19 @@ import pymongo
 def add_records(collection):
     records = [
         {
-            '_id': 'I001', 'firstname': 'Kamlesh', 'lastname': 'Patel', 'department': 'AI', 'qualification': 'BTech', 'age':'21','Marks': {'Statistics': 89,'Python': 50,'SQLAlchemy': 68},'Status':'Pass'
+            'id': 'I001', 'firstname': 'Kamlesh', 'lastname': 'Patel', 'department': 'AI', 'qualification': 'BTech', 'age':'21','Marks': {'Statistics': 89,'Python': 50,'SQLAlchemy': 68},'Status':'Pass'
         },
         {
-            '_id': 'I002', 'firstname': 'Harsh', 'lastname': 'Mistry', 'department': 'HR', 'qualification': 'BTech', 'age':'21','Marks': {'Statistics': 99,'Python': 80,'SQLAlchemy': 69},'Status':'Pass'
+            'id': 'I002', 'firstname': 'Harsh', 'lastname': 'Mistry', 'department': 'HR', 'qualification': 'BTech', 'age':'21','Marks': {'Statistics': 99,'Python': 80,'SQLAlchemy': 69},'Status':'Pass'
         },
         {
-            '_id': 'I003', 'firstname': 'Om', 'lastname': 'Mishra', 'department': 'ML', 'qualification': 'BTech', 'age':'20','Marks': {'Statistics': 80,'Python': 70,'SQLAlchemy': 69},'Status':'Pass'
+            'id': 'I003', 'firstname': 'Om', 'lastname': 'Mishra', 'department': 'ML', 'qualification': 'BTech', 'age':'20','Marks': {'Statistics': 80,'Python': 70,'SQLAlchemy': 69},'Status':'Pass'
         },
         {
-            '_id': 'I004', 'firstname': 'Samarth', 'lastname': 'Prajapati', 'department': 'AI', 'qualification': 'BE', 'age':'21','Marks': {'Statistics': 90,'Python': 100,'SQLAlchemy': 99},'Status':'Pass'
+            'id': 'I004', 'firstname': 'Samarth', 'lastname': 'Prajapati', 'department': 'AI', 'qualification': 'BE', 'age':'21','Marks': {'Statistics': 90,'Python': 100,'SQLAlchemy': 99},'Status':'Pass'
         },
         {
-            '_id': 'I005', 'firstname': 'Alok', 'lastname': 'Yadav', 'department': 'BA', 'qualification': 'Bsc', 'age':'18','Marks': {'Statistics': 80,'Python': 10,'SQLAlchemy': 9},'Status':'Pass'
+            'id': 'I005', 'firstname': 'Alok', 'lastname': 'Yadav', 'department': 'BA', 'qualification': 'Bsc', 'age':'18','Marks': {'Statistics': 80,'Python': 10,'SQLAlchemy': 9},'Status':'Pass'
         }
     ]
     result=collection.insert_many(records)
