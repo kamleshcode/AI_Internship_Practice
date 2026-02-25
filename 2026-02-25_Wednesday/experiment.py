@@ -100,10 +100,9 @@ class DTRegressor:
             plt.show()
 
             plt.figure(figsize=(15, n_rows * 5))
-            plt.suptitle("Numerical Column v/s Target", fontsize=16)
+            plt.suptitle("Box Plots ", fontsize=16)
             for i,col in enumerate(num_df.columns):
                 plt.subplot(n_rows, n_cols, i + 1)
-                # sns.scatterplot(x=col,y=target_col,data=self.df,color='coral', alpha=0.7)
                 sns.boxplot(self.df[col],palette="bright")
                 plt.title(f'{col}')
             plt.tight_layout()
@@ -210,7 +209,7 @@ def main():
     obj = DTRegressor(filepath)
     obj.load_dataset()
     obj.preprocess_data()
-    # obj.eda()
+    obj.eda()
     obj.train_test_split()
     obj.build_pipeline()
     obj.train_model()
