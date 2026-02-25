@@ -5,6 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score,classification_report, confusion_matrix
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.tree import plot_tree
 import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
@@ -154,6 +155,8 @@ def train_and_predict(x1, x2, y1, y2):
     print(f'Accuracy: {accuracy}')
     print(f"Classification Report:\n {classification_report(y2, y_predict)}")
     print(f'Confusion Matrix: {confusion_matrix(y2, y_predict)}')
+    plot_tree(dc)
+    plt.show()
 
 def plot(df):
     """This function is used to plot correlation of numerical columns"""
