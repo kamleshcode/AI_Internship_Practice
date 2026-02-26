@@ -1,0 +1,9 @@
+RandomForestClassifier:
+  max_depth: 10
+  min_samples_split: 5
+  n_estimators: 100
+  random_state: 42
+
+data:
+  file_path: 'patient_churn_dataset.csv'
+  test_size: 0.3
