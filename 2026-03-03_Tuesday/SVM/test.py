@@ -1,8 +1,10 @@
 import matplotlib.pyplot  as plt
+import numpy as np
 import seaborn as sns
 import pandas as pd
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler,OneHotEncoder
 from sklearn.svm import SVC
@@ -32,6 +34,7 @@ class SupportVectorClassifier:
         self.X_test = None
         self.y_test = None
         self.random_state = 42
+        self.test_size = 0.2
 
     def load_data(self):
         """
@@ -116,19 +119,30 @@ class SupportVectorClassifier:
         try:
             self.X = self.data.iloc[:,:-1]
             self.y = self.data.iloc[:,-1]
-            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X,self.y,random_state = self.random_state)
+            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X,self.y,random_state = self.random_state,test_size=self.test_size)
         except Exception as e:
             print("Error in train_test_split : ",e)
 
     def train_model(self):
         """
-        This function is used for training the model using pipeline
+        This function is used for training the model using grid search CV
         :return: None
         """
         try:
             print("Training model")
             self.pipeline= Pipeline(steps=[('preprocessing',self.preprocessing_pipeline),('training',self.model)])
-            self.pipeline.fit(self.X_train,self.y_train)
+            param_grid = {
+                "training__C": [0.1, 1, 10, 100],
+                "training__gamma": [1, 0.1, 0.01, 0.001],
+                "training__kernel": ["linear", "poly", "rbf"]
+            }
+            print("Starting Grid Search CV... this may take a while...\n")
+            grid_search = GridSearchCV(self.pipeline, param_grid, refit=True, verbose=2, cv=5)
+            grid_search.fit(self.X_train, self.y_train)
+            self.pipeline = grid_search.best_estimator_
+            self.model = grid_search.best_estimator_.named_steps["training"]
+            print(end=seperator)
+            print(f"Best Parameters:{grid_search.best_params_}\n")
             print("Model Trained Completed ...")
         except Exception as e:
             print("Error in train_model : ",e)
@@ -142,11 +156,34 @@ class SupportVectorClassifier:
             print("Evaluating model")
             accuracy = self.pipeline.score(self.X_test,self.y_test)
             print(f'Accuracy : {accuracy*100}%')
-            confusion_matrix = self.pipeline.confusion_matrix(self.X_test,self.y_test)
-            sns.pairplot(confusion_matrix)
-            plt.show()
+            y_pred = self.pipeline.predict(self.X_test)
+            print("\nClassification Report:")
+            print(classification_report(self.y_test, y_pred))
+            print("Confusion Matrix:")
+            print(confusion_matrix(self.y_test, y_pred))
         except Exception as e:
             print("Error in evaluate_model : ",e)
+
+    def plot_decision_boundary(self):
+        try:
+            fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
+            genders = ['Male', 'Female']  # List to iterate through
+            for i, gender in enumerate(genders):
+                ax = axes[i]
+                x = np.linspace(self.X['age'].min(), self.X['age'].max(), 100)
+                y = np.linspace(self.X['estimated_salary'].min(), self.X['estimated_salary'].max(), 100)
+                xx, yy = np.meshgrid(x, y)
+                grid = pd.DataFrame({'gender': gender, 'age': xx.ravel(), 'estimated_salary': yy.ravel()})
+                Z = self.pipeline.predict(grid).reshape(xx.shape)
+                ax.contourf(xx, yy, Z, alpha=0.3, cmap='coolwarm')
+                subset = self.data[self.data['gender'] == gender]
+                ax.scatter(subset['age'], subset['estimated_salary'], c=subset['purchased'], cmap='coolwarm',
+                           edgecolors='k')
+                ax.set_title(gender)
+            plt.show()
+        except Exception as e:
+            print(f"Error: {e}")
+
 
 def main():
     file_path = "../data/user_data.csv"
@@ -159,6 +196,7 @@ def main():
     obj.train_test_split()
     obj.train_model()
     obj.evaluate_model()
+    obj.plot_decision_boundary()
 
 if __name__ == "__main__":
     main()
