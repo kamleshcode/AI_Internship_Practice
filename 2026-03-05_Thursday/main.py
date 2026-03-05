@@ -3,7 +3,7 @@ import matplotlib.pyplot  as plt
 import seaborn as sns
 import pandas as pd
 from sklearn.compose import ColumnTransformer
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
@@ -166,6 +166,17 @@ class KNNClassifier:
             print(classification_report(self.y_test, y_pred))
             print("Confusion Matrix:")
             print(confusion_matrix(self.y_test, y_pred))
+            y_score = self.pipeline.predict_proba(self.X_test)[:, 1]
+            fpr, tpr, _ = roc_curve(self.y_test, y_score)
+            roc_auc = auc(fpr, tpr)
+            plt.figure(figsize=(6, 4))
+            plt.plot(fpr, tpr, label=f'ROC Curve (AUC = {roc_auc:.2f})')
+            plt.plot([0, 1], [0, 1], 'k--')  # Diagonal line
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title('ROC Curve')
+            plt.legend()
+            plt.show()
         except Exception as e:
             print("Error in evaluate_model : ",e)
 
