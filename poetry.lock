@@ -1209,6 +1209,30 @@ files = [
 ]
 
 [[package]]
+name = "mlxtend"
+version = "0.24.0"
+description = "Machine Learning Library Extensions"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "mlxtend-0.24.0-py3-none-any.whl", hash = "sha256:2cd15e94360f0c693c8c042a98698d18b03557ab47a7549524c2b354dd8e17d1"},
+    {file = "mlxtend-0.24.0.tar.gz", hash = "sha256:594f124539d84c3a86951715e16656abfc3005f5da7d3a56b53c77d28d5263f8"},
+]
+
+[package.dependencies]
+joblib = ">=1.5.2"
+matplotlib = ">=3.10.8"
+numpy = ">=2.3.5"
+pandas = ">=2.3.3"
+scikit-learn = ">=1.8.0"
+scipy = ">=1.16.3"
+
+[package.extras]
+docs = ["mkdocs", "mkdocs-bootswatch", "nbconvert", "python-markdown-math"]
+testing = ["pytest"]
+
+[[package]]
 name = "mypy-extensions"
 version = "1.1.0"
 description = "Type system extensions for programs checked with the mypy type checker."
@@ -2946,4 +2970,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13"
-content-hash = "ef96d4b88cc97e3867aa56da20300c71a17a207e084b9d3e02515d1d731c073c"
+content-hash = "7bab39c17e5f8dfb79fcd51baead96483e0742ad786145064ed60e23b905be01"
