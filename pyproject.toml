@@ -27,7 +27,8 @@ dependencies = [
     "imblearn (>=0.0,<0.1)",
     "category-encoders (>=2.9.0,<3.0.0)",
     "plotly (>=6.6.0,<7.0.0)",
-    "mlxtend (>=0.24.0,<0.25.0)"
+    "mlxtend (>=0.24.0,<0.25.0)",
+    "tensorflow (>=2.21.0,<3.0.0)",
 ]
 
 
