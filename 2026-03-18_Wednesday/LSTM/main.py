@@ -4,6 +4,9 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.layers import LSTM, Dense, Embedding
 
 class SentimentAnalysisLSTM:
+    """
+    A text classification pipeline using LSTM to predict binary sentiment from review data.
+    """
     def __init__(self):
         self.data = None
         self.sentiments = None
@@ -13,6 +16,9 @@ class SentimentAnalysisLSTM:
         self.model= None
 
     def load_data(self):
+        """
+        Creates a sample dataset of reviews and corresponding sentiment labels.
+        """
         try:
             data = {
             'Review' : [
@@ -34,6 +40,9 @@ class SentimentAnalysisLSTM:
             print(f'Error in loading data : {e}')
 
     def preprocess_text(self):
+        """
+        Tokenizes raw text reviews and pads them into fixed-length numeric sequences.
+        """
         try:
             texts = self.data['Review']
             self.sentiments = self.data['Sentiment']
@@ -50,6 +59,9 @@ class SentimentAnalysisLSTM:
             print(f'Error in preprocessing text : {e}')
 
     def build_model(self):
+        """
+        Constructs the Sequential LSTM model architecture with Embedding and Dense layers.
+        """
         try:
             vocab_size =len(self.tokenizer.word_index)+1
             # we have done +1 because index start from 1 and zero reserved for padding
@@ -72,6 +84,9 @@ class SentimentAnalysisLSTM:
             print(f'Error in building model : {e}')
 
     def train_model(self):
+        """
+        Trains the compiled LSTM model on the preprocessed tokenized data.
+        """
         try:
             self.model.fit(
                 self.tokenized_data,
@@ -83,6 +98,9 @@ class SentimentAnalysisLSTM:
             print(f'Error in training model : {e}')
 
     def predict(self):
+        """
+        Preprocesses a test input string and predicts its sentiment score.
+        """
         try:
             test_text = ['service was too good']
             seq = self.tokenizer.texts_to_sequences(test_text)
