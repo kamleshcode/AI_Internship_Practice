@@ -87,6 +87,17 @@ class SentimentAnalysisRNN:
         except Exception as e:
             print(f"Error in training: {e}")
 
+    def predict_sentiment(self, test_sentence):
+        try:
+            seq = self.tokenizer.texts_to_sequences([test_sentence])
+            padded = pad_sequences(seq, maxlen=self.max_len)
+            prediction = self.model.predict(padded, verbose=0)
+
+            sentiment = "Positive" if prediction > 0.5 else "Negative"
+            print(f"Sentence: '{test_sentence}'")
+            print(f"Confidence: {prediction[0][0]:.4f} -> {sentiment}")
+        except Exception as e:
+            print(f"Error in prediction: {e}")
 
 def main():
     rnn = SentimentAnalysisRNN()
@@ -94,6 +105,11 @@ def main():
     rnn.preprocess_text()
     rnn.build_model()
     rnn.train_model()
+
+    print('\nTesting model :')
+    rnn.predict_sentiment("the film was amazing")
+    rnn.predict_sentiment("i hate movie")
+
 
 if __name__ == "__main__":
     main()
