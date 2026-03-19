@@ -48,11 +48,40 @@ class SentimentAnalysisRNN:
         except Exception as e:
             print(f"Error in preprocessing: {e}")
 
+    def build_model(self):
+        try:
+            vocab_size = len(self.tokenizer.word_index) + 1
+
+            self.model = models.Sequential([
+                # input_dim: Size of vocabulary
+                # output_dim: Dimension of the dense embedding
+                # input_length: Length of input sequences (5)
+                layers.Embedding(input_dim=vocab_size, output_dim=8, input_length=self.max_len),
+
+                # SimpleRNN layer with 16 units
+                layers.SimpleRNN(16),
+
+                # Final output layer for binary classification (0 or 1)
+                layers.Dense(1, activation='sigmoid')
+            ])
+
+            self.model.compile(
+                optimizer='adam',
+                loss='binary_crossentropy',
+                metrics=['accuracy']
+            )
+            print("\nModel Summary :")
+            self.model.summary()
+            print("RNN Model built successfully.")
+        except Exception as e:
+            print(f"Error in building model: {e}")
+
 
 def main():
     rnn = SentimentAnalysisRNN()
     rnn.load_data()
     rnn.preprocess_text()
+    rnn.build_model()
 
 if __name__ == "__main__":
     main()
