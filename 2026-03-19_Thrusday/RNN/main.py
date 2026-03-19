@@ -76,12 +76,24 @@ class SentimentAnalysisRNN:
         except Exception as e:
             print(f"Error in building model: {e}")
 
+    def train_model(self):
+        try:
+            self.model.fit(
+                self.tokenized_data,
+                self.labels,
+                epochs=20,
+            )
+            print("Training complete.")
+        except Exception as e:
+            print(f"Error in training: {e}")
+
 
 def main():
     rnn = SentimentAnalysisRNN()
     rnn.load_data()
     rnn.preprocess_text()
     rnn.build_model()
+    rnn.train_model()
 
 if __name__ == "__main__":
     main()
