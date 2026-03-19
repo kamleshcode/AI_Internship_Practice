@@ -13,6 +13,9 @@ class SentimentAnalysisRNN:
         self.model = None
 
     def load_data(self):
+        """
+        Loads the specific sentences and labels provided.
+        """
         try:
             sentences = [
                 "movie was good",
@@ -34,6 +37,9 @@ class SentimentAnalysisRNN:
             print(f"Error in loading data: {e}")
 
     def preprocess_text(self):
+        """
+        Converts text to sequences and applies padding.
+        """
         try:
             # Fit tokenizer on our specific sentences
             self.tokenizer.fit_on_texts(self.data)
@@ -49,6 +55,9 @@ class SentimentAnalysisRNN:
             print(f"Error in preprocessing: {e}")
 
     def build_model(self):
+        """
+        Builds an RNN using SimpleRNN or LSTM layers and prints the summary.
+        """
         try:
             vocab_size = len(self.tokenizer.word_index) + 1
 
@@ -77,6 +86,9 @@ class SentimentAnalysisRNN:
             print(f"Error in building model: {e}")
 
     def train_model(self):
+        """
+        this method is used to train the RNN model
+        """
         try:
             self.model.fit(
                 self.tokenized_data,
@@ -88,6 +100,11 @@ class SentimentAnalysisRNN:
             print(f"Error in training: {e}")
 
     def predict_sentiment(self, test_sentence):
+        """
+        Predicts sentiment for a new custom sentence.
+        :param test_sentence: Sentence to predict sentiment for
+        :return: None
+        """
         try:
             seq = self.tokenizer.texts_to_sequences([test_sentence])
             padded = pad_sequences(seq, maxlen=self.max_len)
@@ -100,6 +117,9 @@ class SentimentAnalysisRNN:
             print(f"Error in prediction: {e}")
 
 def main():
+    """
+    Driver function to execute RNN Pipeline
+    """
     rnn = SentimentAnalysisRNN()
     rnn.load_data()
     rnn.preprocess_text()
@@ -109,7 +129,6 @@ def main():
     print('\nTesting model :')
     rnn.predict_sentiment("the film was amazing")
     rnn.predict_sentiment("i hate movie")
-
 
 if __name__ == "__main__":
     main()
