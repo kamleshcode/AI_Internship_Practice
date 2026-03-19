@@ -65,7 +65,7 @@ class SentimentAnalysisRNN:
                 # input_dim: Size of vocabulary
                 # output_dim: Dimension of the dense embedding
                 # input_length: Length of input sequences (5)
-                layers.Embedding(input_dim=vocab_size, output_dim=8, input_length=self.max_len),
+                layers.Embedding(input_dim=vocab_size, output_dim=8, input_shape=(self.max_len,)),
 
                 # SimpleRNN layer with 16 units
                 layers.SimpleRNN(16),
