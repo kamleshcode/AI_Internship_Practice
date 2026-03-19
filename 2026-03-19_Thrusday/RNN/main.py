@@ -33,10 +33,26 @@ class SentimentAnalysisRNN:
         except Exception as e:
             print(f"Error in loading data: {e}")
 
+    def preprocess_text(self):
+        try:
+            # Fit tokenizer on our specific sentences
+            self.tokenizer.fit_on_texts(self.data)
+            sequences = self.tokenizer.texts_to_sequences(self.data)
+
+            # Pad sequences so they all have a length of 5
+            self.tokenized_data = pad_sequences(sequences, maxlen=self.max_len)
+
+            print(f"Vocabulary Size: {len(self.tokenizer.word_index)}")
+            print(f'Word Index:{self.tokenizer.word_index}')
+            print(f"Tokenized Data:\n{self.tokenized_data}")
+        except Exception as e:
+            print(f"Error in preprocessing: {e}")
+
 
 def main():
-    rnn_tool = SentimentAnalysisRNN()
-    rnn_tool.load_data()
+    rnn = SentimentAnalysisRNN()
+    rnn.load_data()
+    rnn.preprocess_text()
 
 if __name__ == "__main__":
     main()
