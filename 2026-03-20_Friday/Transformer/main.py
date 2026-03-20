@@ -18,7 +18,6 @@ class Tokenizer:
 
 class TransformerBlock(layers.Layer):
     """Calculates Attention Scores and Context Vectors."""
-
     def __init__(self, d, h):
         super().__init__()
         # h = heads, d = model dimension
@@ -38,6 +37,21 @@ class TransformerBlock(layers.Layer):
         x = self.norm(x + context)
         return self.norm(x + self.ffn(x))
 
+class MiniGPT(tf.keras.Model):
+    """Turns word IDs into Embeddings and predicts next word."""
+    def __init__(self, v_size, d=64):
+        super().__init__()
+        self.w_emb = layers.Embedding(v_size, d) # Word Embeddings
+        self.p_emb = layers.Embedding(100, d)    # Position Embeddings
+        self.brain = TransformerBlock(d, 4)
+        self.head = layers.Dense(v_size)         # Output Scores (Logits)
+
+    def call(self, x):
+        # Combined Embedding = Word Meaning + Position
+        emb = self.w_emb(x) + self.p_emb(tf.range(tf.shape(x)[1]))
+        x = self.brain(emb)
+        return self.head(x)
+
 def main():
     """Train on a story and generate text."""
     story = ["the robot found a key", "the key opened a door", "behind the door was magic"]
@@ -50,6 +64,22 @@ def main():
     # Input X (3 words) -> Target Y (next 3 words)
     X = np.array([ids[i:i + 3] for i in range(len(ids) - 3)])
     Y = np.array([ids[i + 1:i + 4] for i in range(len(ids) - 3)])
+
+    model = MiniGPT(len(tk.words))
+    model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+
+    print("Training...")
+    model.fit(X, Y, epochs=150, verbose=0)
+
+    # Generate
+    prompt = "the robot found"
+    out_ids = tk.encode(prompt)
+    for _ in range(3):
+        pred = model.predict(np.array([out_ids]), verbose=0)
+        next_id = np.argmax(pred[0, -1])  # Pick highest score
+        out_ids.append(next_id)
+
+    print(f"Prompt: {prompt} | Result: {tk.decode(out_ids)}")
 
 
 if __name__ == "__main__":
