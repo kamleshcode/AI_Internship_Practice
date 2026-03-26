@@ -1,6 +1,14 @@
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.prompts import PromptTemplate
 from langchain_core.tools import tool
+from langchain_groq import ChatGroq
+import os
+
+llm = ChatGroq(
+        model="llama-3.3-70b-versatile",
+        temperature=0,
+        api_key=os.getenv("GROQ_API_KEY")
+    )
 
 def load_pdf_text(path:str):
     """Load and extract complete text from PDF file."""
@@ -27,10 +35,15 @@ def load_prompt_template(path:str):
 @tool
 def generate_requirements(document_text:str):
     """Generate detailed functional and non-functional requirements strictly from provided business document content."""
-    prompt = load_prompt_template("prompts/requirement_prompt.md")
-    if prompt:
-        return prompt.format(context=document_text)
-    return "Error: Could not load requirement prompt."
+    try:
+        print("[Calling tool : generate_requirements]")
+        prompt = load_prompt_template("prompts/requirement_prompt.md")
+        formated_prompt = prompt.format(context=document_text)
+        requirements = llm.invoke(formated_prompt).content
+        print("\nOutput of generate_requirements :\n", requirements)
+        return requirements
+    except Exception as e:
+        print(f"Error in generate_requirements: {e}")
 
 @tool
 def generate_user_stories(requirements:str):
@@ -38,15 +51,26 @@ def generate_user_stories(requirements:str):
     Generate detailed user stories from requirements.Include title,description, and detailed acceptance criteria
     covering positive and negative flows.
     """
-    prompt = load_prompt_template("prompts/user_story_prompt.md")
-    if prompt:
-        return prompt.format(requirements=requirements)
-    return "Error: Could not load user story prompt."
+    try:
+        print("[Calling tool : generate_user_stories]")
+        prompt = load_prompt_template("prompts/user_story_prompt.md")
+        formated_prompt=prompt.format(requirements=requirements)
+        user_stories = llm.invoke(formated_prompt).content
+        print("\nOutput of generate_user_stories :\n", user_stories)
+        return user_stories
+    except Exception as e:
+        print(f"Error in generate_user_stories: {e}")
 
 @tool
 def generate_tasks(stories:str):
     """Generate implementation tasks from user stories. One user story may generate multiple tasks."""
-    prompt = load_prompt_template("prompts/task_prompt.md")
-    if prompt:
-        return prompt.format(stories=stories)
-    return "Error: Could not load task prompt."
+    try:
+        print("[Calling tool : generate_tasks]")
+        prompt = load_prompt_template("prompts/task_prompt.md")
+        formated_prompt=prompt.format(stories=stories)
+        tasks = llm.invoke(formated_prompt).content
+        print("\nOutput of generate_tasks :\n", tasks)
+        return tasks
+    except Exception as e:
+        print(f"Error in generate_tasks: {e}")
+
