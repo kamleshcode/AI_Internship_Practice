@@ -1,4 +1,5 @@
 import os
+from langchain_core.messages import HumanMessage
 from langchain_groq import ChatGroq
 from langchain.agents import create_agent
 from dotenv import load_dotenv
@@ -48,29 +49,27 @@ def main():
     Rules:
     - Use only the provided document content.
     - Do not invent missing business logic.
-    - Always call tools in order: generate_requirements → generate_user_stories → generate_tasks
+    - Always call tools in order: generate_requirements -> generate_user_stories -> generate_tasks
 
     """
     )
 
     # Invoke agent
     print("\nAgent Starting BA Automation..\n")
-    result = agent.invoke({
-        "messages": [
-            {
-                "role": "user",
-                "content": f"""
-                Document Content:{document_text}
-                Generate functional requirements, non-functional requirements,
-                detailed user stories, and implementation tasks.
-                """
-            },
-        ]
-    })
+    user_message = HumanMessage(
+        content=f"""
+            Document Content: {document_text}
+
+            Generate functional requirements, non-functional requirements,
+            detailed user stories, and implementation tasks.
+            """
+    )
+
+    result = agent.invoke({"messages": [user_message]})
 
     print("\nAgent Final Output\n")
     for msg in result["messages"]:
-        print(msg["role"].upper(), ":", msg["content"])
+        print(msg.type.upper(), ":", msg.content)
 
 if __name__ == "__main__":
     main()
