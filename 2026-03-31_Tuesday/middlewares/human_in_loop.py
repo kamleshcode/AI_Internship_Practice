@@ -4,16 +4,11 @@ from langchain.agents.middleware import HumanInTheLoopMiddleware
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langchain_groq import ChatGroq
-from langchain_ollama import ChatOllama
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.types import Command
 from dotenv import load_dotenv
 load_dotenv()
 
-# model = ChatOllama(
-#     model= os.getenv("OLLAMA_MODEL"),
-#     temperature=0.4,
-# )
 model = ChatGroq(
     model="llama-3.3-70b-versatile",
     temperature=0,
@@ -53,19 +48,16 @@ agent = create_agent(
 
 
 def main():
-    # Setup configuration with a unique thread ID
     config = {"configurable": {"thread_id": "trading_thread_1"}}
     query = {"messages": [HumanMessage(content="Check the price of AAPL and buy 5 shares if it is Rs.150.")]}
 
-    print("--- Step 1: Initial Invocation (Should Interrupt) ---")
+    print("Step 1: Initial Invocation (Should Interrupt)")
     result = agent.invoke(query, config=config)
 
-    # Optional: Print the agent's thought before it pauses
     if "messages" in result:
         print(f"Agent Action: {result['messages'][-1].additional_kwargs.get('tool_calls', 'No tool call found')}")
 
-    print("\n--- Step 2: Sending Approval Command ---")
-    # This resumes the graph and allows the tool to execute
+    print("\nStep 2: Sending Approval Command")
     final_state = agent.invoke(
         Command(
             resume={
@@ -79,8 +71,7 @@ def main():
         config=config
     )
 
-    # Step 3: Print the final message content
-    print("\n--- Final Agent Response ---")
+    print("\nFinal Agent Response")
     if "messages" in final_state:
         print(final_state["messages"][-1].content)
     else:
