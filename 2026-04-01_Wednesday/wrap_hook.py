@@ -17,6 +17,7 @@ def timing_middleware(request, handler):
     start = time.time()
     # handler returns a ModelResponse object
     response = handler(request)
+    print(response)
     end = time.time()
     print("After model call")
     print(f"Execution time: {end - start:.2f} sec")
