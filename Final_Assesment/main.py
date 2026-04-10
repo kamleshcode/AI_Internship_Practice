@@ -9,6 +9,10 @@ load_dotenv()
 from langgraph.checkpoint.memory import MemorySaver
 
 def main():
+    """
+        Entry point for the LangChain agent application.
+        - Configure the ChatOllama LLM,Create an agent, define a custom search tool
+    """
     try:
         file_paths = ["data/company_policies.pdf","data/company_policies.pdf","data/product_manual.pdf"]
         retriever = data_retriever(file_paths)
@@ -16,9 +20,8 @@ def main():
         @tool
         def search_document(query):
             """this is used to retrieve data from the retriever"""
-            docs = retriever.invoke({"query": query})
-            print(docs)
-            return "\n".join([d.content for d in docs])
+            docs = retriever.invoke(query)
+            return "\n".join([d.page_content for d in docs])
 
         llm = ChatOllama(
             model="mistral-nemo",
@@ -30,25 +33,28 @@ def main():
 
         agent = create_agent(
             model= llm,
-            tools = tools,
+            tools=tools,
             middleware=[SummarizationMiddleware(
                 model="mistral-nemo",
                 trigger =("messages", 6),
                 keep = ("messages",6)
             )],
+            system_prompt="""
+            You are a helpful chatbot assistant and your task is to assist the user in answering their queries 
+            using the tools available to you. always use the tool when the user asks a question related to the 
+            company policies, product manual or faq. if you do not know the answer do not try to hallucinate.
+            """,
             checkpointer = MemorySaver(),
         )
 
         while True:
-            print("Started")
+            print("Hii, I am your assistant how can i help you?")
             query = input("Enter query: ")
             if query.lower() == "exit":
+                print("Goodbye!")
                 exit()
-            docs = retriever.invoke({"query": query})
-            print(docs)
             config = {"configurable": {"thread_id": "thread_1"}}
             response = agent.invoke({"messages":[{"role": "user", "content": query}]}, config=config)
-            print(response)
             content = response["messages"][-1].content
             print(f'AI Response: {content}')
 
