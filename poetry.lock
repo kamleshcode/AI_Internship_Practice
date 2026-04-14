@@ -2180,6 +2180,23 @@ together = ["langchain-together"]
 xai = ["langchain-xai"]
 
 [[package]]
+name = "langchain-chroma"
+version = "1.1.0"
+description = "An integration package connecting Chroma and LangChain."
+optional = false
+python-versions = "<4.0.0,>=3.10.0"
+groups = ["main"]
+files = [
+    {file = "langchain_chroma-1.1.0-py3-none-any.whl", hash = "sha256:ff65e4a2ccefb0fb9fde2ff38705022ace402f979d557f018f6e623f7288f0fc"},
+    {file = "langchain_chroma-1.1.0.tar.gz", hash = "sha256:8069685e7848041e998d16c8a4964256b031fd20551bf59429173415bc2adc12"},
+]
+
+[package.dependencies]
+chromadb = ">=1.3.5,<2.0.0"
+langchain-core = ">=1.1.3,<2.0.0"
+numpy = {version = ">=2.1.0", markers = "python_version >= \"3.13\""}
+
+[[package]]
 name = "langchain-classic"
 version = "1.0.3"
 description = "Building applications with LLMs through composability"
@@ -2408,6 +2425,23 @@ files = [
 [package.dependencies]
 langchain-core = ">=0.2.38"
 ormsgpack = ">=1.12.0"
+
+[[package]]
+name = "langgraph-checkpoint-mongodb"
+version = "0.3.1"
+description = "Library with a MongoDB implementation of LangGraph checkpoint saver."
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "langgraph_checkpoint_mongodb-0.3.1-py3-none-any.whl", hash = "sha256:c17fc1f3ff89fd93abdcae9b69d9050bca7b2f2b965207b303d3b174f82dae98"},
+    {file = "langgraph_checkpoint_mongodb-0.3.1.tar.gz", hash = "sha256:ea174e652a13dd7172a0cd925f3023b796b01586533d2dc52f05873e4c34141b"},
+]
+
+[package.dependencies]
+langchain-mongodb = ">=0.8.0"
+langgraph-checkpoint = ">=3.0.0"
+pymongo = ">=4.12,<4.16"
 
 [[package]]
 name = "langgraph-prebuilt"
@@ -7377,4 +7411,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13,<3.15"
-content-hash = "49f8064c8636a91a99448ff4f057907047518803554c331d7dce2f76a556dfbd"
+content-hash = "ace18dd575a065118e616daf9c0c3980e5119061498d025e9e9192f4dff217bc"
